@@ -5,7 +5,7 @@
  *      Email: armin.joachimsmeyer@gmail.com
  *      License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
- *      Sources: http://code.google.com/p/simple-touch-screen-dso-software/
+ *      Sources: https://github.com/ArminJo/Arduino-Simple-DSO
  *
  *      Features:
  *      No dedicated hardware, just off the shelf components + c software
@@ -115,12 +115,12 @@
 //#define USE_RTC  //if a DS1307 is connected to the I2C bus - is checked at startup :-)
 #include <Arduino.h>
 
-#include <ADS7846.h>
-#include <MI0283QT2.h>
-#include <TouchButton.h>
-#include <TouchSlider.h>
 #include "BlueDisplay.h"
 #include "BlueSerial.h"
+#include <TouchButton.h>
+#include <TouchSlider.h>
+#include <ADS7846.h>
+#include <MI0283QT2.h>
 
 #include <avr/interrupt.h>
 
@@ -309,7 +309,8 @@ uint8_t LastPickerValue;
 uint16_t EraseColors[] = { COLOR_BACKGROUND_DSO, COLOR_DATA_ERASE_LOW, COLOR_DATA_ERASE_HIGH };
 struct DisplayControlStruct {
     uint8_t TriggerLevelDisplayValue; // For clearing old line of manual trigger level setting
-    uint8_t DisplayMode;bool showInfoMode;
+    uint8_t DisplayMode;
+    bool showInfoMode;
     uint8_t EraseColorIndex;
     uint16_t EraseColor;
 };
@@ -401,9 +402,11 @@ const uint32_t TimebaseDivExactValues[TIMEBASE_NUMBER_OF_ENTRIES] PROGMEM = { 10
  */
 struct MeasurementControlStruct {
     // State
-    bool IsRunning;bool StopRequested;
+    bool IsRunning;
+    bool StopRequested;
     // Trigger flag for ISR and single shot mode
-    bool searchForTrigger;bool isSingleShotMode;
+    bool searchForTrigger;
+    bool isSingleShotMode;
 
     uint8_t ADCReference; // DEFAULT = 1 =VCC   INTERNAL = 3 = 1.1V
     // Input select

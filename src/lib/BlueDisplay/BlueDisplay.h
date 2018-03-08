@@ -1,7 +1,7 @@
 /*
  * BlueDisplay.h
  *
- *   SUMMARY
+ *  SUMMARY
  *  Blue Display is an Open Source Android remote Display for Arduino etc.
  *  It receives basic draw requests from Arduino etc. over Bluetooth and renders it.
  *  It also implements basic GUI elements as buttons and sliders.
@@ -10,17 +10,18 @@
  *  Copyright (C) 2014  Armin Joachimsmeyer
  *  armin.joachimsmeyer@gmail.com
  *
- *  This file is part of BlueDisplay.
+ *  This file is part of BlueDisplay https://github.com/ArminJo/android-blue-display.
+ *
  *  BlueDisplay is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
-
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
-
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  *
@@ -28,6 +29,8 @@
 
 #ifndef BLUEDISPLAY_H_
 #define BLUEDISPLAY_H_
+
+#include "Colors16Bit.h"
 
 #include "BlueDisplayProtocol.h"
 // for convenience in order to include only BlueDisplay.h
@@ -55,35 +58,6 @@ typedef uint16_t Color_t; // is needed in EventHandler.h
 #define DISPLAY_DEFAULT_WIDTH 320
 #define STRING_BUFFER_STACK_SIZE 22 // Buffer size allocated on stack for ...PGM() functions.
 
-/*
- * Basic colors
- */
-// RGB to 16 bit 565 schema - 5 red | 6 green | 5 blue
-#define COLOR_WHITE     ((Color_t)0xFFFF)
-// 01 because 0 is used as flag (e.g. in touch button for default color)
-#define COLOR_BLACK     ((Color_t)0X0001)
-#define COLOR_RED       ((Color_t)0xF800)
-#define COLOR_GREEN     ((Color_t)0X07E0)
-#define COLOR_BLUE      ((Color_t)0x001F)
-#define COLOR_DARK_BLUE ((Color_t)0x0014)
-#define COLOR_YELLOW    ((Color_t)0XFFE0)
-#define COLOR_ORANGE    ((Color_t)0XFE00)
-#define COLOR_MAGENTA   ((Color_t)0xF81F)
-#define COLOR_CYAN      ((Color_t)0x07FF)
-
-// If used as background color for char or text, the background will not filled
-#define COLOR_NO_BACKGROUND   ((Color_t)0XFFFE)
-
-#define BLUEMASK 0x1F
-#define GET_RED(rgb) ((rgb & 0xF800) >> 8)
-#define GET_GREEN(rgb) ((rgb & 0x07E0) >> 3)
-#define GET_BLUE(rgb) ((rgb & 0x001F) << 3)
-#define RGB(r,g,b)   ((Color_t)(((r&0xF8)<<8)|((g&0xFC)<<3)|((b&0xF8)>>3))) //5 red | 6 green | 5 blue
-
-#define SLIDER_DEFAULT_BORDER_COLOR     COLOR_BLUE
-#define SLIDER_DEFAULT_BAR_COLOR        COLOR_GREEN
-#define SLIDER_DEFAULT_BACKGROUND_COLOR COLOR_WHITE
-#define SLIDER_DEFAULT_THRESHOLD_COLOR  COLOR_RED
 
 /*
  * Android Text sizes which are closest to the 8*12 font used locally
@@ -96,6 +70,7 @@ typedef uint16_t Color_t; // is needed in EventHandler.h
 #define TEXT_SIZE_11 11
 // for factor 2 of 8*12 font
 #define TEXT_SIZE_22 22
+#define TEXT_SIZE_26 26
 // for factor 3 of 8*12 font
 #define TEXT_SIZE_33 33
 // for factor 4 of 8*12 font
@@ -139,170 +114,13 @@ uint16_t getTextWidth(uint16_t aTextSize);
 uint16_t getTextAscend(uint16_t aTextSize);
 uint16_t getTextAscendMinusDescend(uint16_t aTextSize);
 uint16_t getTextMiddle(uint16_t aTextSize);
-uint16_t getLocalTextSize(uint16_t aTextSize);
 
-/**********************
- * BUTTON LAYOUTS
- *********************/
-#define BUTTON_AUTO_RED_GREEN_FALSE_COLOR COLOR_RED
-#define BUTTON_AUTO_RED_GREEN_TRUE_COLOR COLOR_GREEN
-#define BUTTON_DEFAULT_SPACING 16
-#define BUTTON_DEFAULT_SPACING_THREE_QUARTER 12
-#define BUTTON_DEFAULT_SPACING_HALF 8
-#define BUTTON_DEFAULT_SPACING_QUARTER 4
 /*
  * Layout for 320 x 240 screen size
  */
 #define LAYOUT_320_WIDTH 320
 #define LAYOUT_240_HEIGHT 240
 #define LAYOUT_256_HEIGHT 256
-
-/**********************
- * WIDTHS
- *********************/
-// For documentation
-#ifdef __cplusplus
-#if ( false ) // It can only be used with compiler flag -std=gnu++11
-constexpr int ButtonWidth ( int aNumberOfButtonsPerLine, int aDisplayWidth ) {return ((aDisplayWidth - ((aNumberOfButtonsPerLine-1)*aDisplayWidth/20))/aNumberOfButtonsPerLine);}
-#endif
-#endif
-
-#define BUTTON_HORIZONTAL_SPACING_DYN (sActualDisplayWidth/64)
-
-// for 2 buttons horizontal - 19 characters
-#define BUTTON_WIDTH_2 152
-#define BUTTON_WIDTH_2_POS_2 (BUTTON_WIDTH_2 + BUTTON_DEFAULT_SPACING)
-//
-// for 3 buttons horizontal - 12 characters
-#define BUTTON_WIDTH_3 96
-#define BUTTON_WIDTH_3_POS_2 (BUTTON_WIDTH_3 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_WIDTH_3_POS_3 (LAYOUT_320_WIDTH - BUTTON_WIDTH_3)
-//
-// for 3 buttons horizontal - dynamic
-#define BUTTON_WIDTH_3_DYN (sActualDisplayWidth/3 - BUTTON_HORIZONTAL_SPACING_DYN)
-#define BUTTON_WIDTH_3_DYN_POS_2 (sActualDisplayWidth/3)
-#define BUTTON_WIDTH_3_DYN_POS_3 (sActualDisplayWidth - BUTTON_WIDTH_3_DYN)
-
-#define BUTTON_WIDTH_3_5 82
-//
-// for 4 buttons horizontal - 8 characters
-#define BUTTON_WIDTH_4 68
-#define BUTTON_WIDTH_4_POS_2 (BUTTON_WIDTH_4 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_WIDTH_4_POS_3 (2*(BUTTON_WIDTH_4 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_4_POS_4 (LAYOUT_320_WIDTH - BUTTON_WIDTH_4)//
-//
-// for 4 buttons horizontal - dynamic
-#define BUTTON_WIDTH_4_DYN (sActualDisplayWidth/4 - BUTTON_HORIZONTAL_SPACING_DYN)
-#define BUTTON_WIDTH_4_DYN_POS_2 (sActualDisplayWidth/4)
-#define BUTTON_WIDTH_4_DYN_POS_3 (sActualDisplayWidth/2)
-#define BUTTON_WIDTH_4_DYN_POS_4 (sActualDisplayWidth - BUTTON_WIDTH_4_DYN)
-//
-// for 5 buttons horizontal 51,2  - 6 characters
-#define BUTTON_WIDTH_5 51
-#define BUTTON_WIDTH_5_POS_2 (BUTTON_WIDTH_5 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_WIDTH_5_POS_3 (2*(BUTTON_WIDTH_5 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_5_POS_4 (3*(BUTTON_WIDTH_5 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_5_POS_5 (LAYOUT_320_WIDTH - BUTTON_WIDTH_5)
-//
-//  for 2 buttons horizontal plus one small with BUTTON_WIDTH_5 (118,5)- 15 characters
-#define BUTTON_WIDTH_2_5 120
-#define BUTTON_WIDTH_2_5_POS_2   (BUTTON_WIDTH_2_5 + BUTTON_DEFAULT_SPACING -1)
-#define BUTTON_WIDTH_2_5_POS_2_5 (LAYOUT_320_WIDTH - BUTTON_WIDTH_5)
-//
-// for 6 buttons horizontal
-#define BUTTON_WIDTH_6 40
-#define BUTTON_WIDTH_6_POS_2 (BUTTON_WIDTH_6 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_WIDTH_6_POS_3 (2*(BUTTON_WIDTH_6 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_6_POS_4 (3*(BUTTON_WIDTH_6 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_6_POS_5 (4*(BUTTON_WIDTH_6 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_WIDTH_6_POS_6 (LAYOUT_320_WIDTH - BUTTON_WIDTH_6)
-//
-// for 8 buttons horizontal
-#define BUTTON_WIDTH_8 33
-#define BUTTON_WIDTH_8_POS_2 (BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF)
-#define BUTTON_WIDTH_8_POS_3 (2*(BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_WIDTH_8_POS_4 (3*(BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_WIDTH_8_POS_5 (4*(BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_WIDTH_8_POS_6 (5*(BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_WIDTH_8_POS_7 (6*(BUTTON_WIDTH_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_WIDTH_8_POS_8 (LAYOUT_320_WIDTH - BUTTON_WIDTH_0)
-//
-// for 10 buttons horizontal
-#define BUTTON_WIDTH_10 28
-#define BUTTON_WIDTH_10_POS_2 (BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER)
-#define BUTTON_WIDTH_10_POS_3 (2*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_4 (3*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_5 (4*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_6 (5*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_7 (6*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_8 (7*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_9 (8*(BUTTON_WIDTH_10 + BUTTON_DEFAULT_SPACING_QUARTER))
-#define BUTTON_WIDTH_10_POS_10 (LAYOUT_320_WIDTH - BUTTON_WIDTH_0)
-
-#define BUTTON_WIDTH_16 16
-#define BUTTON_WIDTH_16_POS_2 (BUTTON_WIDTH_16 + BUTTON_DEFAULT_SPACING_QUARTER)
-
-/**********************
- * HEIGHTS
- *********************/
-#define BUTTON_VERTICAL_SPACING_DYN (sActualDisplayHeight/32)
-
-// for 4 buttons vertical
-#define BUTTON_HEIGHT_4 48
-#define BUTTON_HEIGHT_4_LINE_2 (BUTTON_HEIGHT_4 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_HEIGHT_4_LINE_3 (2*(BUTTON_HEIGHT_4 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_HEIGHT_4_LINE_4 (LAYOUT_240_HEIGHT - BUTTON_HEIGHT_4)
-//
-// for 4 buttons vertical and DISPLAY_HEIGHT 256
-#define BUTTON_HEIGHT_4_256 52
-#define BUTTON_HEIGHT_4_256_LINE_2 (BUTTON_HEIGHT_4_256 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_HEIGHT_4_256_LINE_3 (2*(BUTTON_HEIGHT_4_256 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_HEIGHT_4_256_LINE_4 (LAYOUT_256_HEIGHT - BUTTON_HEIGHT_4_256)
-//
-// for 4 buttons vertical and variable display height
-#define BUTTON_HEIGHT_4_DYN (sActualDisplayHeight/4 - BUTTON_VERTICAL_SPACING_DYN)
-#define BUTTON_HEIGHT_4_DYN_LINE_2 (sActualDisplayHeight/4)
-#define BUTTON_HEIGHT_4_DYN_LINE_3 (sActualDisplayHeight/2)
-#define BUTTON_HEIGHT_4_DYN_LINE_4 (sActualDisplayHeight - BUTTON_HEIGHT_4_DYN)
-//
-// for 5 buttons vertical
-#define BUTTON_HEIGHT_5 38
-#define BUTTON_HEIGHT_5_LINE_2 (BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING_THREE_QUARTER)
-#define BUTTON_HEIGHT_5_LINE_3 (2*(BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING_THREE_QUARTER))
-#define BUTTON_HEIGHT_5_LINE_4 (3*(BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING_THREE_QUARTER))
-#define BUTTON_HEIGHT_5_LINE_5 (LAYOUT_240_HEIGHT - BUTTON_HEIGHT_5)
-//
-// for 5 buttons vertical and DISPLAY_HEIGHT 256
-#define BUTTON_HEIGHT_5_256 39
-#define BUTTON_HEIGHT_5_256_LINE_2 (BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING)
-#define BUTTON_HEIGHT_5_256_LINE_3 (2*(BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_HEIGHT_5_256_LINE_4 (3*(BUTTON_HEIGHT_5 + BUTTON_DEFAULT_SPACING))
-#define BUTTON_HEIGHT_5_256_LINE_5 (LAYOUT_256_HEIGHT - BUTTON_HEIGHT_5)
-//
-// for 5 buttons vertical and variable display height
-#define BUTTON_HEIGHT_5_DYN (sActualDisplayHeight/5 - BUTTON_VERTICAL_SPACING_DYN)
-#define BUTTON_HEIGHT_5_DYN_LINE_2 (sActualDisplayHeight/5)
-#define BUTTON_HEIGHT_5_DYN_LINE_3 ((sActualDisplayHeight/5)*2)
-#define BUTTON_HEIGHT_5_DYN_LINE_4 ((sActualDisplayHeight/5)*3)
-#define BUTTON_HEIGHT_5_DYN_LINE_5 (sActualDisplayHeight - BUTTON_HEIGHT_5_DYN)
-//
-// for 6 buttons vertical
-#define BUTTON_HEIGHT_6 30
-#define BUTTON_HEIGHT_6_LINE_2 (BUTTON_HEIGHT_6 + BUTTON_DEFAULT_SPACING_THREE_QUARTER)
-#define BUTTON_HEIGHT_6_LINE_3 (2*(BUTTON_HEIGHT_6 + BUTTON_DEFAULT_SPACING_THREE_QUARTER))
-#define BUTTON_HEIGHT_6_LINE_4 (3*(BUTTON_HEIGHT_6 + BUTTON_DEFAULT_SPACING_THREE_QUARTER))
-#define BUTTON_HEIGHT_6_LINE_5 (4*(BUTTON_HEIGHT_6 + BUTTON_DEFAULT_SPACING_THREE_QUARTER))
-#define BUTTON_HEIGHT_6_LINE_6 (LAYOUT_HEIGHT - BUTTON_HEIGHT_6)
-
-// for 8 buttons vertical
-#define BUTTON_HEIGHT_8 29
-#define BUTTON_HEIGHT_8_LINE_2 (BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF)
-#define BUTTON_HEIGHT_8_LINE_3 (2*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_HEIGHT_8_LINE_4 (3*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_HEIGHT_8_LINE_5 (4*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_HEIGHT_8_LINE_6 (5*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_HEIGHT_8_LINE_7 (6*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
-#define BUTTON_HEIGHT_8_LINE_8 (LAYOUT_HEIGHT - BUTTON_HEIGHT_8)
 
 /**********************
  * Constants used in protocol
@@ -335,25 +153,21 @@ static const int FLAG_BUTTON_GLOBAL_USE_UP_EVENTS_FOR_BUTTONS = 0x01;
 static const int FLAG_BUTTON_GLOBAL_SET_BEEP_TONE = 0x02;
 
 // Flags for init
-//old
+
 static const int BUTTON_FLAG_NO_BEEP_ON_TOUCH = 0x00;
 static const int BUTTON_FLAG_DO_BEEP_ON_TOUCH = 0x01;
-static const int BUTTON_FLAG_TYPE_AUTO_RED_GREEN = 0x02; // see void doToggleRedGreenButton() / BDButton.cpp
+//old
+static const int BUTTON_FLAG_TYPE_AUTO_RED_GREEN = 0x02;
+// better name for the function
+static const int BUTTON_FLAG_TYPE_TOGGLE_RED_GREEN = 0x02;
 static const int BUTTON_FLAG_TYPE_AUTOREPEAT = 0x04;
+static const int BUTTON_FLAG_TYPE_TOGGLE_RED_GREEN_MANUAL_REFRESH = 0x0A; // must be manually drawn after event to show new caption/color
+
 //new
 static const int FLAG_BUTTON_NO_BEEP_ON_TOUCH = 0x00;
 static const int FLAG_BUTTON_DO_BEEP_ON_TOUCH = 0x01;
 static const int FLAG_BUTTON_TYPE_AUTO_RED_GREEN = 0x02;
 static const int FLAG_BUTTON_TYPE_AUTOREPEAT = 0x04;
-#ifdef AVR
-static const int FLAG_BUTTON_CAPTION_IS_IN_PGMSPACE = 0x40;
-#endif
-
-#ifdef LOCAL_DISPLAY_EXISTS
-#define LOCAL_BUTTON_FLAG_MASK 0x18
-#define FLAG_USE_BDBUTTON_FOR_CALLBACK 0x08
-#define FLAG_IS_ACTIVE 0x10 // Button is checked by checkAllButtons() etc.
-#endif
 
 #ifdef USE_BUTTON_POOL
 #define INTERNAL_FLAG_MASK 0x80
@@ -389,12 +203,20 @@ static const int FLAG_SLIDER_CAPTION_ABOVE = 0x04;
 // Android system tones
 // codes start with 0 - 15 for DTMF tones and ends with code TONE_CDMA_SIGNAL_OFF=98 for silent tone (which does not work on lollipop)
 #define TONE_CDMA_KEYPAD_VOLUME_KEY_LITE 89
-#define TONE_PROP_BEEP 27
-#define TONE_PROP_BEEP2 28
+#define TONE_PROP_BEEP_OK TONE_CDMA_KEYPAD_VOLUME_KEY_LITE // 120 ms 941 + 1477Hz - normal tone for OK Feedback
+#define TONE_PROP_BEEP_ERROR 28 // 2* 35/200 ms 400 + 1200Hz - normal tone for ERROR Feedback
+#define TONE_PROP_BEEP_ERROR_HIGH 25 // 2* 100/100 ms 1200Hz - high tone for ERROR Feedback
+#define TONE_PROP_BEEP_ERROR_LONG 26 // 2* 35/200 ms 400 + 1200Hz - normal tone for ERROR Feedback
 #define TONE_SILENCE 50 // since 98 does not work on lollipop
 #define TONE_CDMA_ONE_MIN_BEEP 88
 #define TONE_DEFAULT TONE_CDMA_KEYPAD_VOLUME_KEY_LITE
 #define TONE_LAST_VALID_TONE_INDEX 98
+
+#define FEEDBACK_TONE_OK 0
+#define FEEDBACK_TONE_ERROR 1
+#define FEEDBACK_TONE_LONG_ERROR TONE_PROP_BEEP_ERROR_LONG
+#define FEEDBACK_TONE_HIGH_ERROR TONE_PROP_BEEP_ERROR_HIGH
+#define FEEDBACK_TONE_NO_TONE TONE_SILENCE
 
 /**********************
  * Sensors
@@ -450,7 +272,7 @@ public:
     void playTone(uint8_t aToneIndex);
     void playTone(uint8_t aToneIndex, int16_t aToneDuration);
     void playTone(uint8_t aToneIndex, int16_t aToneDuration, uint8_t aToneVolume);
-    void playFeedbackTone(bool isError);
+    void playFeedbackTone(uint8_t isError);
     void setLongTouchDownTimeout(uint16_t aLongTouchDownTimeoutMillis);
 
     void clearDisplay(Color_t aColor);
@@ -486,20 +308,23 @@ public:
     void debugMessage(const char *aStringPtr);
     void debug(uint8_t aByte);
     void debug(const char* aMessage, uint8_t aByte);
+    void debug(const char* aMessage, int8_t aByte);
     void debug(int8_t aByte);
     void debug(uint16_t aShort);
+    void debug(const char* aMessage, uint16_t aShort);
     void debug(int aShort);
     void debug(const char* aMessage, int aShort);
     void debug(uint32_t aShort);
+    void debug(float aDouble);
     void debug(double aDouble);
 
     void drawLine(uint16_t aXStart, uint16_t aYStart, uint16_t aXEnd, uint16_t aYEnd, Color_t aColor);
     void drawLineRel(uint16_t aXStart, uint16_t aYStart, uint16_t aXDelta, uint16_t aYDelta, Color_t aColor);
     void drawLineFastOneX(uint16_t x0, uint16_t y0, uint16_t y1, Color_t aColor);
-    void drawVectorDegree(uint16_t aXStart, uint16_t aYStart, uint16_t aLength, int aDegree, Color_t aColor,
+    void drawVectorDegrees(uint16_t aXStart, uint16_t aYStart, uint16_t aLength, int aDegrees, Color_t aColor,
             int16_t aThickness = 1);
-    void drawVectorRadian(uint16_t aXStart, uint16_t aYStart, uint16_t aLength, int aRadian, Color_t aColor,
-            int16_t aThickness = 1);
+    void drawVectorRadian(uint16_t aXStart, uint16_t aYStart, uint16_t aLength, float aRadian, Color_t aColor, int16_t aThickness =
+            1);
     void drawLineWithThickness(uint16_t aXStart, uint16_t aYStart, uint16_t aXEnd, uint16_t aYEnd, int16_t aThickness,
             Color_t aColor);
     void drawLineRelWithThickness(uint16_t aXStart, uint16_t aYStart, uint16_t aXDelta, uint16_t aYDelta, int16_t aThickness,
@@ -531,7 +356,8 @@ public:
     // Not yet implemented
     //    void getText(void (*aTextHandler)(const char *));
     //    void getTextWithShortPrompt(void (*aTextHandler)(const char *), const char *aShortPromptString);
-    void getInfo(uint16_t aInfoSubcommand, void (*aInfoHandler)(uint8_t *));
+    // results in a info callback
+    void getInfo(uint8_t aInfoSubcommand, void (*aInfoHandler)(uint8_t, uint8_t, uint16_t, ByteShortLongFloatUnion));
     // results in a reorientation callback
     void requestMaxCanvasSize(void);
 
@@ -607,7 +433,6 @@ public:
     struct XYSize mActualDisplaySize;
     struct XYSize mMaxDisplaySize;
     uint32_t mHostUnixTimestamp;
-    uint32_t mLocalMillisForHostTimestamp;
 
     volatile bool mConnectionEstablished;
     volatile bool mOrientationIsLandscape;
@@ -625,6 +450,8 @@ private:
 
 // The instance provided by the class itself
 extern BlueDisplay BlueDisplay1;
+
+void clearDisplayAndDisableButtonsAndSliders(Color_t aColor);
 
 #ifdef LOCAL_DISPLAY_EXISTS
 #include <MI0283QT2.h>
@@ -659,11 +486,12 @@ void writeStringC(const char *aStringPtr, uint8_t aStringLength);
 #endif
 
 /*
- * Utilities used also internal for
+ * Utilities used also internal
  */
 #ifdef AVR
 uint16_t getADCValue(uint8_t aChannel, uint8_t aReference);
 float getVCCValue(void);
+float getVCCVoltage(void);
 float getTemperature(void);
 #endif
 

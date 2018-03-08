@@ -3,7 +3,6 @@
 #define BIT_CLEAR(value, bit)           ((value) &= ~(1UL << (bit)))
 #define BIT_WRITE(value, bit, bitvalue) (bitvalue ? BIT_SET(value, bit) : BIT_CLEAR(value, bit))
 
-
 #if !defined(digitalPinToPortReg)
 #if (defined(__AVR_ATmega1280__) || defined(__AVR_ATmega1281__) || \
      defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__))
@@ -77,7 +76,6 @@
 (((P) ==  6) ? COM4A1 : (((P) ==  7) ? COM4B1 : (((P) ==  8) ? COM4C1 : \
 (((P) == 46) ? COM5A1 : (((P) == 45) ? COM5B1 : COM5C1))))))))))))))
 
-
 #elif (defined(__AVR_ATmega644__) || \
        defined(__AVR_ATmega644P__))
 // Arduino 644 Pins
@@ -126,6 +124,14 @@
 (((P) >= 8 && (P) <= 11) ? (P) - 4 : (((P) >= 18 && (P) <= 21) ? 25 - (P) : (((P) == 0) ? 2 : (((P) == 1) ? 3 : (((P) == 2) ? 1 : (((P) == 3) ? 0 : (((P) == 4) ? 4 : (((P) == 6) ? 7 : (((P) == 13) ? 7 : (((P) == 14) ? 3 : (((P) == 15) ? 1 : (((P) == 16) ? 2 : (((P) == 17) ? 0 : (((P) == 22) ? 1 : (((P) == 23) ? 0 : (((P) == 24) ? 4 : (((P) == 25) ? 7 : (((P) == 26) ? 4 : (((P) == 27) ? 5 : 6 )))))))))))))))))))
 
 #else
+#if defined(__AVR_ATtiny85__)
+// we have only PORTB - Extension 01.03.2018
+#define __digitalPinToPortReg(P) (&PORTB)
+#define __digitalPinToDDRReg(P)  (&DDRB)
+#define __digitalPinToPINReg(P)  (&PINB)
+#define __digitalPinToBit(P) \
+(((P) >= 0 && (P) <= 7) ? (P) : (((P) >= 8 && (P) <= 13) ? (P) - 8 : (P) - 14))
+#else
 // Standard Arduino Pins
 #define __digitalPinToPortReg(P) \
 (((P) >= 0 && (P) <= 7) ? &PORTD : (((P) >= 8 && (P) <= 13) ? &PORTB : &PORTC))
@@ -135,6 +141,7 @@
 (((P) >= 0 && (P) <= 7) ? &PIND : (((P) >= 8 && (P) <= 13) ? &PINB : &PINC))
 #define __digitalPinToBit(P) \
 (((P) >= 0 && (P) <= 7) ? (P) : (((P) >= 8 && (P) <= 13) ? (P) - 8 : (P) - 14))
+#endif
 
 #if defined(__AVR_ATmega8__)
 // 3 PWM
@@ -155,12 +162,8 @@
 (((P) == 11) ? COM2A1 : COM2B1)))))
 #endif  //defined(__AVR_ATmega8__)
 
-
 #endif
 #endif  //#if !defined(digitalPinToPortReg)
-
-
-
 
 #if !defined(digitalWriteFast)
 #define digitalWriteFast(P, V) \
@@ -171,18 +174,36 @@ if (__builtin_constant_p(P) && __builtin_constant_p(V)) { \
 }
 #endif
 
-
 #if !defined(pinModeFast)
+#if defined(__AVR_ATtiny85__)
+// we have only PORTB - Extension 01.03.2018
+#define pinModeFast(P, V) \
+if (__builtin_constant_p(P) && __builtin_constant_p(V)) { \
+  if (V == INPUT_PULLUP) {\
+    BIT_WRITE(*__digitalPinToDDRReg(P), __digitalPinToBit(P), (INPUT)); \
+    BIT_WRITE(*__digitalPinToPortReg(P), __digitalPinToBit(P), (HIGH)); \
+  } else { \
+    BIT_WRITE(*__digitalPinToDDRReg(P), __digitalPinToBit(P), (V)); \
+  } \
+} else { \
+ pinMode((P), (V)); \
+}
+#else
 #define pinModeFast(P, V) \
 if (__builtin_constant_p(P) && __builtin_constant_p(V)) { \
   if (digitalPinToTimer(P)) \
     BIT_CLEAR(*__digitalPinToTimer(P), __digitalPinToTimerBit(P)); \
-  BIT_WRITE(*__digitalPinToDDRReg(P), __digitalPinToBit(P), (V)); \
+  if (V == INPUT_PULLUP) {\
+    BIT_WRITE(*__digitalPinToDDRReg(P), __digitalPinToBit(P), (INPUT)); \
+    BIT_WRITE(*__digitalPinToPortReg(P), __digitalPinToBit(P), (HIGH)); \
+  } else { \
+    BIT_WRITE(*__digitalPinToDDRReg(P), __digitalPinToBit(P), (V)); \
+  } \
 } else {  \
   pinMode((P), (V)); \
 } 
 #endif
-
+#endif
 
 #if !defined(digitalReadFast)
 #define digitalReadFast(P) ( (int) __digitalReadFast((P)) )
@@ -191,3 +212,9 @@ if (__builtin_constant_p(P) && __builtin_constant_p(V)) { \
   ? BIT_READ(*__digitalPinToPINReg(P), __digitalPinToBit(P)) \
   : digitalRead((P))
 #endif
+
+// Extension 01.03.2018
+#if !defined(digitalToggleFast)
+#define digitalToggleFast(P) BIT_SET(*__digitalPinToPINReg(P), __digitalPinToBit(P))
+#endif
+

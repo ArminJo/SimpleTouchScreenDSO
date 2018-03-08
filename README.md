@@ -1,11 +1,12 @@
 # SimpleTouchScreenDSO
 Simple DSO Software for Arduino Uno/MEGA with a Touchscreen Shield.
-##No dedicated hardware, just off the shelf components + c software
+
+## No dedicated hardware, just off the shelf components + c software
 
 OK I personally added a piezo buzzer for audio feedback of touches and 3 resistors, a capacitator and a switch to have an AC input. 
 And few more resistors and a switch for an attenuator.
 
-##Features:
+## Features:
 
  - 300 kSamples per second
  - Timebase 1-2-5 from 100 microseconds to 500 milliseconds per div (31 pixel)
@@ -21,13 +22,13 @@ And few more resistors and a switch for an attenuator.
  - Touch voltage picker
  - 1.1 or 5 Volt reference selectable
  
-##Hardware:
+## Hardware:
 
  - [Arduino Uno Rev ](http://www.watterott.com/de/Arduino-Uno)
  - [mSD-Shield](http://www.watterott.com/de/Arduino-mSD-Shield)
  - [MI0283QT-2 Adapter](http://www.watterott.com/de/MI0283QT-2-Adapter)
  
-#Safety circuit and AC/DC switch
+# Safety circuit and AC/DC switch
  3 resistors   2 diodes   1 capacitor   1 switch
 ```
                 ADC INPUT PIN

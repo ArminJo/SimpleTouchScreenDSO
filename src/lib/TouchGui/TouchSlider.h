@@ -15,6 +15,7 @@
 #ifndef TOUCHSLIDER_H_
 #define TOUCHSLIDER_H_
 
+// should be globally set
 //#define REMOTE_DISPLAY_SUPPORTED
 
 #include "MI0283QT2.h"

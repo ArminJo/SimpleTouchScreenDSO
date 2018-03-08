@@ -20,7 +20,7 @@
 
 #include "TouchButtonAutorepeat.h"
 
-TouchButtonAutorepeat::TouchButtonAutorepeat() {
+TouchButtonAutorepeat::TouchButtonAutorepeat() { // @suppress("Class members should be properly initialized")
 
 }
 

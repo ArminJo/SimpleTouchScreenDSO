@@ -34,8 +34,8 @@
 								<option id="de.innot.avreclipse.compiler.option.debug.level.1898445368" name="Generate Debugging Info" superClass="de.innot.avreclipse.compiler.option.debug.level" useByScannerDiscovery="false" value="de.innot.avreclipse.compiler.option.debug.level.g3" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.1116692955" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize" useByScannerDiscovery="false" value="de.innot.avreclipse.compiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.compiler.option.incpath.1448053595" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/variants/standard"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/variants/standard"/>
 								</option>
 								<option id="de.innot.avreclipse.compiler.option.optimize.packstruct.1584006294" name="Pack structs (-fpack-struct)" superClass="de.innot.avreclipse.compiler.option.optimize.packstruct" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.shortenums.29843305" name="Short enums (-fshort-enums)" superClass="de.innot.avreclipse.compiler.option.optimize.shortenums" useByScannerDiscovery="false" value="false" valueType="boolean"/>
@@ -54,8 +54,8 @@
 								<option id="de.innot.avreclipse.cppcompiler.option.debug.level.1045724577" name="Generate Debugging Info" superClass="de.innot.avreclipse.cppcompiler.option.debug.level" useByScannerDiscovery="false" value="de.innot.avreclipse.cppcompiler.option.debug.level.g3" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.596101964" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize" useByScannerDiscovery="false" value="de.innot.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.1796270220" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/variants/standard"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/variants/standard"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/ADS7846}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/MI0283QT2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/TouchGui}&quot;"/>
@@ -101,7 +101,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/graphics/Chart.cpp|src/lib/MI0283QT2/tinyPrint.cpp|src/lib/BlueDisplay/EventHandler.cpp|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/lib/MI0283QT2/tinyPrint.cpp|src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/graphics/Chart.cpp|src/lib/BlueDisplay/EventHandler.cpp|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -137,8 +137,8 @@
 								<option id="de.innot.avreclipse.compiler.option.debug.level.1775533090" name="Generate Debugging Info" superClass="de.innot.avreclipse.compiler.option.debug.level" value="de.innot.avreclipse.compiler.option.debug.level.none" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.631295308" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize" value="de.innot.avreclipse.compiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.compiler.option.incpath.1538000730" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/variants/mega"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/variants/mega"/>
 								</option>
 								<option id="de.innot.avreclipse.compiler.option.def.1831955670" name="Define Syms (-D)" superClass="de.innot.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ARDUINO=105"/>
@@ -155,8 +155,8 @@
 								<option id="de.innot.avreclipse.cppcompiler.option.debug.level.1008746160" name="Generate Debugging Info" superClass="de.innot.avreclipse.cppcompiler.option.debug.level" value="de.innot.avreclipse.cppcompiler.option.debug.level.g3" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.956401672" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize" value="de.innot.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.333869889" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/variants/mega"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/variants/mega"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/ADS7846}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/MI0283QT2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/TouchGui}&quot;"/>
@@ -200,7 +200,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/MI0283QT2/tinyPrint.cpp|src/lib/graphics/Chart.cpp|src/lib/BlueDisplay/EventHandler.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/lib/MI0283QT2/tinyPrint.cpp|src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/graphics/Chart.cpp|src/lib/BlueDisplay/EventHandler.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -251,8 +251,8 @@
 								<option id="de.innot.avreclipse.cppcompiler.option.debug.level.900915097" name="Generate Debugging Info" superClass="de.innot.avreclipse.cppcompiler.option.debug.level" value="de.innot.avreclipse.cppcompiler.option.debug.level.g3" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.934560224" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize" value="de.innot.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.887690239" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
-									<listOptionValue builtIn="false" value="/Elektro/arduino/hardware/arduino/avr/variants/leonardo"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/cores/arduino"/>
+									<listOptionValue builtIn="false" value="E:/Elektro/arduino/hardware/arduino/avr/variants/leonardo"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/ADS7846}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/MI0283QT2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/lib/TouchGui}&quot;"/>
@@ -297,7 +297,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/MI0283QT2/tinyPrint.cpp|src/lib/graphics/Chart.cpp|src/lib/BlueDisplay/EventHandler.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/lib/MI0283QT2/tinyPrint.cpp|src/lib/BlueDisplay/BlueSerial.cpp|src/lib/graphics/thickLine.cpp|src/lib/MI0283QT2/font_8x8.c|src/lib/MI0283QT2/font_8x14.c|src/lib/MI0283QT2/font_7x12.c|src/lib/MI0283QT2/font_6x8.c|src/lib/MI0283QT2/font_6x10.c|src/lib/MI0283QT2/font_5x8.c|src/lib/MI0283QT2/font_5x12.c|src/lib/MI0283QT2/font_4x6.c|src/lib/MI0283QT2/font_16x26.c|src/lib/MI0283QT2/font_12x20.c|src/lib/MI0283QT2/font_12x16.c|src/lib/MI0283QT2/font_10x16.c|src/lib/BlueDisplay/BDSlider.cpp|src/lib/BlueDisplay/BDButton.cpp|src/lib/graphics/Chart.cpp|src/lib/BlueDisplay/EventHandler.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

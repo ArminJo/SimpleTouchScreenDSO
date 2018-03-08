@@ -1,7 +1,9 @@
 /*
  * BDSlider.cpp
  *
- *   SUMMARY
+ * Implementation of the Slider client stub for the Android BlueDisplay app.
+ *
+ *  SUMMARY
  *  Blue Display is an Open Source Android remote Display for Arduino etc.
  *  It receives basic draw requests from Arduino etc. over Bluetooth and renders it.
  *  It also implements basic GUI elements as buttons and sliders.
@@ -10,17 +12,18 @@
  *  Copyright (C) 2015  Armin Joachimsmeyer
  *  armin.joachimsmeyer@gmail.com
  *
- *  This file is part of BlueDisplay.
+ *  This file is part of BlueDisplay https://github.com/ArminJo/android-blue-display.
+ *
  *  BlueDisplay is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
-
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
-
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  *
@@ -35,7 +38,7 @@
 
 BDSliderHandle_t sLocalSliderIndex = 0;
 
-BDSlider::BDSlider(void) {
+BDSlider::BDSlider(void) { // @suppress("Class members should be properly initialized")
 }
 
 #ifdef LOCAL_DISPLAY_EXISTS
@@ -49,7 +52,7 @@ BDSlider::BDSlider(BDSliderHandle_t aSliderHandle, TouchSlider * aLocalSliderPoi
  * @brief initialization with all parameters (except BarBackgroundColor)
  * @param aPositionX - Determines upper left corner
  * @param aPositionY - Determines upper left corner
- * Only ext 2 values are physical values in pixel
+ * Only next 2 values are physical values in pixel
  * @param aBarWidth - Width of bar (and border) in pixel - no scaling!
  * @param aBarLength - Size of slider bar in pixel = maximum slider value - no scaling!
  * @param aThresholdValue - Scaling! If selected or sent value is bigger, then color of bar changes from BarColor to BarBackgroundColor
