@@ -40,7 +40,7 @@
  * 1. Sync Byte A5
  * 2. Byte Data_Size_Type token (byte, short etc.) - only byte used
  * 3. Short length of data in byte units
- * 4. Length items of data values
+ * 4. (Length) items of data values
  *
  *
  * RECEIVE PROTOCOL USED:
@@ -157,11 +157,14 @@ struct Swipe {
     uint16_t TouchDeltaAbsMax; // max of TouchDeltaXAbs and TouchDeltaYAbs to easily decide if swipe is large enough to be accepted
 };
 
+// Union to speed up the combination of low and high bytes to a word
+// it is not optimal since the compiler still generates 2 unnecessary moves
+// but using  -- value = (high << 8) | low -- gives 5 unnecessary instructions
 union ByteShortLongFloatUnion {
-    unsigned char ByteValues[4];
-    uint16_t Int16Values[2];
-    uint32_t Int32Value;
-    float FloatValue;
+    unsigned char byteValues[4];
+    uint16_t uint16Values[2];
+    uint32_t uint32Value;
+    float floatValue;
 };
 
 struct GuiCallback {

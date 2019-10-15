@@ -21,7 +21,7 @@
 // should be globally set
 //#define REMOTE_DISPLAY_SUPPORTED
 
-#include "Colors16Bit.h"
+#include "Colors.h"
 #ifdef REMOTE_DISPLAY_SUPPORTED
 typedef uint8_t BDButtonHandle_t;
 class BDButton;
@@ -38,7 +38,7 @@ class BDButton;
 #define FLAG_USE_BDBUTTON_FOR_CALLBACK 0x08
 #define FLAG_IS_ACTIVE 0x10 // Button is checked by checkAllButtons() etc.
 
-// must be equal to declaration in BlueDisplay.h static const int BUTTON_FLAG_DO_BEEP_ON_TOUCH = 0x01;
+// must be equal to declaration in BlueDisplay.h static const int FLAG_BUTTON_DO_BEEP_ON_TOUCH = 0x01;
 #define FLAG_DO_BEEP_ON_TOUCH  0x01
 
 static const int FLAG_BUTTON_CAPTION_IS_IN_PGMSPACE = 0x40;

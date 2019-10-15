@@ -15,7 +15,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="de.innot.avreclipse.configuration.app.debug.1027142648" name="UNO" parent="de.innot.avreclipse.configuration.app.debug">
+				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" description="" id="de.innot.avreclipse.configuration.app.debug.1027142648" name="UNO" parent="de.innot.avreclipse.configuration.app.debug" postannouncebuildStep="Memory map" postbuildStep="avr-nm -l -S -n ${BuildArtifactFileBaseName}.elf &gt;${BuildArtifactFileBaseName}.lst">
 					<folderInfo id="de.innot.avreclipse.configuration.app.debug.1027142648." name="/" resourcePath="">
 						<toolChain id="de.innot.avreclipse.toolchain.winavr.app.debug.1584849942" name="AVR-GCC Toolchain" nonInternalBuilderId="de.innot.avreclipse.target.builder.winavr.app.debug" resourceTypeBasedDiscovery="false" superClass="de.innot.avreclipse.toolchain.winavr.app.debug">
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug.710744496" name="Generate HEX file for Flash memory" superClass="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.debug" useByScannerDiscovery="false" value="true" valueType="boolean"/>
@@ -50,7 +50,7 @@
 								</option>
 								<inputType id="de.innot.avreclipse.compiler.winavr.input.238661265" name="C Source Files" superClass="de.innot.avreclipse.compiler.winavr.input"/>
 							</tool>
-							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT}  -x c++ ${INPUTS}" id="de.innot.avreclipse.tool.cppcompiler.app.debug.1486675293" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.app.debug">
+							<tool commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT}  ${INPUTS}" id="de.innot.avreclipse.tool.cppcompiler.app.debug.1486675293" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.app.debug">
 								<option id="de.innot.avreclipse.cppcompiler.option.debug.level.1045724577" name="Generate Debugging Info" superClass="de.innot.avreclipse.cppcompiler.option.debug.level" useByScannerDiscovery="false" value="de.innot.avreclipse.cppcompiler.option.debug.level.g3" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.596101964" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize" useByScannerDiscovery="false" value="de.innot.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.1796270220" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" useByScannerDiscovery="false" valueType="includePath">
@@ -119,7 +119,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" description="" id="de.innot.avreclipse.configuration.app.release.470104752" name="Mega" parent="de.innot.avreclipse.configuration.app.release">
+				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" description="" id="de.innot.avreclipse.configuration.app.release.470104752" name="Mega" parent="de.innot.avreclipse.configuration.app.debug" postannouncebuildStep="Memory map" postbuildStep="avr-nm -l -S -n ${BuildArtifactFileBaseName}.elf &gt;${BuildArtifactFileBaseName}.lst">
 					<folderInfo id="de.innot.avreclipse.configuration.app.release.470104752." name="/" resourcePath="">
 						<toolChain id="de.innot.avreclipse.toolchain.winavr.app.release.1651762117" name="AVR-GCC Toolchain" superClass="de.innot.avreclipse.toolchain.winavr.app.release">
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.262127719" name="Generate HEX file for Flash memory" superClass="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release"/>
@@ -218,7 +218,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" description="" id="de.innot.avreclipse.configuration.app.release.470104752.2001690530" name="Leonardo" parent="de.innot.avreclipse.configuration.app.release">
+				<configuration artifactName="${ProjName}" buildArtefactType="de.innot.avreclipse.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=de.innot.avreclipse.buildArtefactType.app,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" description="" id="de.innot.avreclipse.configuration.app.release.470104752.2001690530" name="Leonardo" parent="de.innot.avreclipse.configuration.app.debug" postannouncebuildStep="Memory map" postbuildStep="avr-nm -l -S -n ${BuildArtifactFileBaseName}.elf &gt;${BuildArtifactFileBaseName}.lst">
 					<folderInfo id="de.innot.avreclipse.configuration.app.release.470104752.2001690530." name="/" resourcePath="">
 						<toolChain id="de.innot.avreclipse.toolchain.winavr.app.release.1578756469" name="AVR-GCC Toolchain" superClass="de.innot.avreclipse.toolchain.winavr.app.release">
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.742701596" name="Generate HEX file for Flash memory" superClass="de.innot.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release"/>
@@ -307,11 +307,7 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="Lampe.de.innot.avreclipse.project.winavr.elf_2.1.0.1254707166" name="AVR Cross Target Application" projectType="de.innot.avreclipse.project.winavr.elf_2.1.0"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="UNO">
-			<resource resourceType="PROJECT" workspacePath="/SimpleTouchScreenDSO"/>
-		</configuration>
-	</storageModule>
+	<storageModule moduleId="refreshScope"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>

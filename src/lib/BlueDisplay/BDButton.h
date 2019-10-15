@@ -34,6 +34,7 @@
 
 #ifdef AVR
 #include <avr/pgmspace.h>
+#include "WString.h"    // for __FlashStringHelper
 #endif
 
 #define BUTTON_AUTO_RED_GREEN_FALSE_COLOR COLOR_RED
@@ -73,6 +74,7 @@ constexpr int ButtonWidth ( int aNumberOfButtonsPerLine, int aDisplayWidth ) {re
 #define BUTTON_WIDTH_3_DYN_POS_2 (sActualDisplayWidth/3)
 #define BUTTON_WIDTH_3_DYN_POS_3 (sActualDisplayWidth - BUTTON_WIDTH_3_DYN)
 
+// width 3.5
 #define BUTTON_WIDTH_3_5 82
 //
 // for 4 buttons horizontal - 8 characters
@@ -194,6 +196,8 @@ constexpr int ButtonWidth ( int aNumberOfButtonsPerLine, int aDisplayWidth ) {re
 #define BUTTON_HEIGHT_8_LINE_7 (6*(BUTTON_HEIGHT_8 + BUTTON_DEFAULT_SPACING_HALF))
 #define BUTTON_HEIGHT_8_LINE_8 (LAYOUT_HEIGHT - BUTTON_HEIGHT_8)
 
+#define BUTTON_HEIGHT_10 20
+
 #ifdef LOCAL_DISPLAY_EXISTS
 #include "TouchButton.h"
 // since we have only a restricted pool of local buttons
@@ -208,8 +212,7 @@ typedef uint16_t BDButtonHandle_t;
 
 extern BDButtonHandle_t sLocalButtonIndex; // local button index counter used by BDButton.init() and BlueDisplay.createButton()
 
-//#include "BlueDisplay.h" // for Color_t - cannot be included here since BlueDisplay.h needs BDButton
-typedef uint16_t Color_t;
+#include "Colors.h"
 
 #ifdef __cplusplus
 class BDButton {
@@ -234,22 +237,22 @@ public:
     //
     bool operator!=(const BDButton &aButton);
 
-    void init(uint16_t aPositionX, uint16_t aPositionY, uint16_t aWidthX, uint16_t aHeightY, Color_t aButtonColor,
+    void init(uint16_t aPositionX, uint16_t aPositionY, uint16_t aWidthX, uint16_t aHeightY, color16_t aButtonColor,
             const char * aCaption, uint16_t aCaptionSize, uint8_t aFlags, int16_t aValue,
             void (*aOnTouchHandler)(BDButton*, int16_t));
 
     void drawButton(void);
-    void removeButton(Color_t aBackgroundColor);
+    void removeButton(color16_t aBackgroundColor);
     void drawCaption(void);
     void setCaption(const char * aCaption);
+    void setCaption(const char * aCaption, bool doDrawButton);
     void setCaptionForValueTrue(const char * aCaption);
     void setCaptionAndDraw(const char * aCaption);
-    void setCaption(const char * aCaption, bool doDrawButton);
     void setValue(int16_t aValue);
     void setValue(int16_t aValue, bool doDrawButton);
     void setValueAndDraw(int16_t aValue);
-    void setButtonColor(Color_t aButtonColor);
-    void setButtonColorAndDraw(Color_t aButtonColor);
+    void setButtonColor(color16_t aButtonColor);
+    void setButtonColorAndDraw(color16_t aButtonColor);
     void setPosition(int16_t aPositionX, int16_t aPositionY);
     void setButtonAutorepeatTiming(uint16_t aMillisFirstDelay, uint16_t aMillisFirstRate, uint16_t aFirstCount,
             uint16_t aMillisSecondRate);
@@ -258,12 +261,20 @@ public:
     void deactivate(void);
 
 #ifdef AVR
-    void initPGM(uint16_t aPositionX, uint16_t aPositionY, uint16_t aWidthX, uint16_t aHeightY, Color_t aButtonColor,
+    void initPGM(uint16_t aPositionX, uint16_t aPositionY, uint16_t aWidthX, uint16_t aHeightY, color16_t aButtonColor,
             const char * aPGMCaption, uint8_t aCaptionSize, uint8_t aFlags, int16_t aValue,
             void (*aOnTouchHandler)(BDButton*, int16_t));
+
     void setCaptionPGM(const char * aPGMCaption);
     void setCaptionPGMForValueTrue(const char * aCaption);
     void setCaptionPGM(const char * aPGMCaption, bool doDrawButton);
+
+    void init(uint16_t aPositionX, uint16_t aPositionY, uint16_t aWidthX, uint16_t aHeightY, color16_t aButtonColor,
+            const __FlashStringHelper * aPGMCaption, uint8_t aCaptionSize, uint8_t aFlags, int16_t aValue,
+            void (*aOnTouchHandler)(BDButton*, int16_t));
+    void setCaption(const __FlashStringHelper * aPGMCaption);
+    void setCaptionForValueTrue(const __FlashStringHelper * aCaption);
+    void setCaption(const __FlashStringHelper * aPGMCaption, bool doDrawButton);
 #endif
 
     BDButtonHandle_t mButtonHandle; // Index for BlueDisplay button functions

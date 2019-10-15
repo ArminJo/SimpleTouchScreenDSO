@@ -63,7 +63,7 @@ BDSlider::BDSlider(BDSliderHandle_t aSliderHandle, TouchSlider * aLocalSliderPoi
  * @param aOnChangeHandler - If NULL no update of bar is done on touch - equivalent to FLAG_SLIDER_IS_ONLY_OUTPUT
  */
 void BDSlider::init(uint16_t aPositionX, uint16_t aPositionY, uint16_t aBarWidth, int16_t aBarLength, int16_t aThresholdValue,
-        int16_t aInitalValue, Color_t aSliderColor, Color_t aBarColor, uint8_t aFlags,
+        int16_t aInitalValue, color16_t aSliderColor, color16_t aBarColor, uint8_t aFlags,
         void (*aOnChangeHandler)(BDSlider *, uint16_t)) {
     BDSliderHandle_t tSliderNumber = sLocalSliderIndex++;
 
@@ -134,7 +134,7 @@ void BDSlider::setActualValueAndDrawBar(int16_t aActualValue) {
     }
 }
 
-void BDSlider::setBarThresholdColor(Color_t aBarThresholdColor) {
+void BDSlider::setBarThresholdColor(color16_t aBarThresholdColor) {
 #ifdef LOCAL_DISPLAY_EXISTS
     mLocalSliderPointer->setBarThresholdColor(aBarThresholdColor);
 #endif
@@ -143,7 +143,7 @@ void BDSlider::setBarThresholdColor(Color_t aBarThresholdColor) {
     }
 }
 
-void BDSlider::setBarBackgroundColor(Color_t aBarBackgroundColor) {
+void BDSlider::setBarBackgroundColor(color16_t aBarBackgroundColor) {
 #ifdef LOCAL_DISPLAY_EXISTS
     mLocalSliderPointer->setBarBackgroundColor(aBarBackgroundColor);
 #endif
@@ -152,8 +152,8 @@ void BDSlider::setBarBackgroundColor(Color_t aBarBackgroundColor) {
     }
 }
 
-void BDSlider::setCaptionProperties(uint8_t aCaptionSize, uint8_t aCaptionPosition, uint8_t aCaptionMargin, Color_t aCaptionColor,
-        Color_t aCaptionBackgroundColor) {
+void BDSlider::setCaptionProperties(uint8_t aCaptionSize, uint8_t aCaptionPosition, uint8_t aCaptionMargin, color16_t aCaptionColor,
+        color16_t aCaptionBackgroundColor) {
 #ifdef LOCAL_DISPLAY_EXISTS
     mLocalSliderPointer->setCaptionColors(aCaptionColor, aCaptionBackgroundColor);
 #endif
@@ -190,7 +190,7 @@ void BDSlider::setValueFormatString(const char * aValueFormatString) {
 }
 
 void BDSlider::setPrintValueProperties(uint8_t aPrintValueTextSize, uint8_t aPrintValuePosition, uint8_t aPrintValueMargin,
-        Color_t aPrintValueColor, Color_t aPrintValueBackgroundColor) {
+        color16_t aPrintValueColor, color16_t aPrintValueBackgroundColor) {
 #ifdef LOCAL_DISPLAY_EXISTS
     mLocalSliderPointer->setValueStringColors(aPrintValueColor, aPrintValueBackgroundColor);
 #endif

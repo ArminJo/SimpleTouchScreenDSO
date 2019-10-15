@@ -63,21 +63,23 @@ bool USART_isBluetoothPaired(void) {
 #endif
 
 #ifdef USE_SIMPLE_SERIAL
-void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin) {
 #ifdef LOCAL_DISPLAY_EXISTS
+void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin) {
     if (aUsePairedPin) {
         pinMode(PAIRED_PIN, INPUT);
     }
+#else
+void initSimpleSerial(uint32_t aBaudRate) {
 #endif
     uint16_t baud_setting;
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(ARDUINO_AVR_LEONARDO) || defined(__AVR_ATmega16U4__) || defined(__AVR_ATmega32U4__)
     // Use TX1 on MEGA and on Leonardo, which has no TX0
-    UCSR1A = 1 << U2X1; // Double Speed Mode
+    UCSR1A = 1 << U2X1;// Double Speed Mode
     // Exact value = 17,3611 (- 1) for 115200  2,1%
     // 8,68 (- 1) for 230400 8,5% for 8, 3.7% for 9
     // 4,34 (- 1) for 460800 8,5%
     // HC-05 Specified Max Total Error (%) for 8 bit= +3.90/-4.00
-    baud_setting = (((F_CPU / 4) / aBaudRate) - 1) / 2;    // /2 after -1 because of better rounding
+    baud_setting = (((F_CPU / 4) / aBaudRate) - 1) / 2;// /2 after -1 because of better rounding
 
     // assign the baud_setting, a.k.a. ubbr (USART Baud Rate Register)
     UBRR1H = baud_setting >> 8;
@@ -91,7 +93,7 @@ void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin) {
     // 8,68 (- 1) for 230400 8,5% for 8, 3.7% for 9
     // 4,34 (- 1) for 460800 8,5%
     // HC-05 Specified Max Total Error (%) for 8 bit= +3.90/-4.00
-    baud_setting = (((F_CPU / 4) / aBaudRate) - 1) / 2;// /2 after -1 because of better rounding
+    baud_setting = (((F_CPU / 4) / aBaudRate) - 1) / 2;    // /2 after -1 because of better rounding
 
     // assign the baud_setting, a.k.a. ubbr (USART Baud Rate Register)
     UBRR0H = baud_setting >> 8;
@@ -107,22 +109,34 @@ void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin) {
 /**
  * ultra simple blocking USART send routine - works 100%!
  */
-void USART_send(char aChar) {
-// wait for buffer to become empty
+void sendUSART(char aChar) {
+    // wait for buffer to become empty
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(ARDUINO_AVR_LEONARDO) || defined(__AVR_ATmega16U4__) || defined(__AVR_ATmega32U4__)
-// Use TX1 on MEGA and on Leonardo, which has no TX0
-    while (!((UCSR1A) & (1 << UDRE1))) {
-        ;
-    }
-    UDR1 = aChar;
+    // Use TX1 on MEGA and on Leonardo, which has no TX0
+        while (!((UCSR1A) & (1 << UDRE1))) {
+            ;
+        }
+        UDR1 = aChar;
 #else
     while (!((UCSR0A) & (1 << UDRE0))) {
         ;
     }
     UDR0 = aChar;
-#endif
+#endif // Atmega...
 }
-#endif
+
+//void USART_send(char aChar) {
+//    sendUSART(aChar);
+//}
+
+void sendUSART(const char * aString) {
+    while(*aString != '0') {
+        sendUSART(*aString);
+        aString++;
+    }
+
+}
+#endif // USE_SIMPLE_SERIAL
 
 /**
  * On Atmega328
@@ -264,7 +278,7 @@ void sendUSARTArgsAndByteBuffer(uint8_t aFunctionTag, int aNumberOfArgs, ...) {
  * Assembles parameter header and appends header for data field
  */
 void sendUSART5ArgsAndByteBuffer(uint8_t aFunctionTag, uint16_t aXStart, uint16_t aYStart, uint16_t aXEnd, uint16_t aYEnd,
-        uint16_t aColor, uint8_t * aBuffer, size_t aBufferLength) {
+        uint16_t aColor, uint8_t * aBufferPtr, size_t aBufferLength) {
 
     uint16_t tParamBuffer[MAX_NUMBER_OF_ARGS_FOR_BD_FUNCTIONS];
 
@@ -280,7 +294,7 @@ void sendUSART5ArgsAndByteBuffer(uint8_t aFunctionTag, uint16_t aXStart, uint16_
     // add data field header
     *tBufferPointer++ = DATAFIELD_TAG_BYTE << 8 | SYNC_TOKEN; // start new transmission block
     *tBufferPointer++ = aBufferLength; // length in byte
-    sendUSARTBufferNoSizeCheck((uint8_t*) &tParamBuffer[0], 18, aBuffer, aBufferLength);
+    sendUSARTBufferNoSizeCheck((uint8_t*) &tParamBuffer[0], 18, aBufferPtr, aBufferLength);
 }
 
 /**
@@ -294,7 +308,7 @@ static uint8_t sReceivedDataSize;
 #ifdef USE_SIMPLE_SERIAL
 bool allowTouchInterrupts = false; // !!do not enable it, if event handling may take more time than receiving a byte (which results in buffer overflow)!!!
 
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(ARDUINO_AVR_LEONARDO) || defined(__AVR_ATmega16U4__) || defined(__AVR_ATmega32U4__)
+#if defined(USART1_RX_vect)
 // Use TX1 on MEGA and on Leonardo, which has no TX0
 ISR(USART1_RX_vect) {
     uint8_t tByte = UDR1;
@@ -302,70 +316,70 @@ ISR(USART1_RX_vect) {
     ISR(USART_RX_vect) {
         uint8_t tByte = UDR0;
 #endif
-    if (sReceiveBufferOutOfSync) {
-        // just wait for next sync token and reset buffer
-        if (tByte == SYNC_TOKEN) {
-            sReceiveBufferOutOfSync = false;
-            sReceivedEventType = EVENT_NO_EVENT;
-            sReceiveBufferIndex = 0;
-        }
-    } else {
-        if (sReceivedEventType == EVENT_NO_EVENT) {
-            if (sReceiveBufferIndex == 0) {
-                // First byte is raw length so subtract 3 for sync+eventType+length bytes
-                tByte -= 3;
-                if (tByte > RECEIVE_MAX_DATA_SIZE) {
-                    sReceiveBufferOutOfSync = true;
-                } else {
-                    sReceiveBufferIndex++;
-                    sReceivedDataSize = tByte;
-                }
-            } else {
-                // Second byte is eventType
-                // setup for receiving plain message bytes
-                sReceivedEventType = tByte;
+        if (sReceiveBufferOutOfSync) {
+            // just wait for next sync token and reset buffer
+            if (tByte == SYNC_TOKEN) {
+                sReceiveBufferOutOfSync = false;
+                sReceivedEventType = EVENT_NO_EVENT;
                 sReceiveBufferIndex = 0;
             }
         } else {
-            if (sReceiveBufferIndex == sReceivedDataSize) {
-                // now we expect a sync token
-                if (tByte == SYNC_TOKEN) {
-                    // event completely received
-                    // we have one dedicated touch down event in order not to overwrite it with other events before processing it
-                    // Yes it makes no sense if interrupts are allowed!
-                    struct BluetoothEvent * tRemoteTouchEventPtr = &remoteEvent;
-#ifndef DO_NOT_NEED_BASIC_TOUCH
-                    if (sReceivedEventType == EVENT_TOUCH_ACTION_DOWN
-                            || (remoteTouchDownEvent.EventType == EVENT_NO_EVENT && remoteEvent.EventType == EVENT_NO_EVENT)) {
-                        tRemoteTouchEventPtr = &remoteTouchDownEvent;
-                    }
-#endif
-                    tRemoteTouchEventPtr->EventType = sReceivedEventType;
-                    // copy buffer to structure
-                    memcpy(tRemoteTouchEventPtr->EventData.ByteArray, sReceiveBuffer, sReceivedDataSize);
-                    sReceiveBufferIndex = 0;
-                    sReceivedEventType = EVENT_NO_EVENT;
-
-                    if (allowTouchInterrupts) {
-                        // Dangerous, it blocks receive event as long as event handling goes on!!!
-                        handleEvent(tRemoteTouchEventPtr);
+            if (sReceivedEventType == EVENT_NO_EVENT) {
+                if (sReceiveBufferIndex == 0) {
+                    // First byte is raw length so subtract 3 for sync+eventType+length bytes
+                    tByte -= 3;
+                    if (tByte > RECEIVE_MAX_DATA_SIZE) {
+                        sReceiveBufferOutOfSync = true;
+                    } else {
+                        sReceiveBufferIndex++;
+                        sReceivedDataSize = tByte;
                     }
                 } else {
-                    // reset buffer since we had an overflow or glitch
-                    sReceiveBufferOutOfSync = true;
+                    // Second byte is eventType
+                    // setup for receiving plain message bytes
+                    sReceivedEventType = tByte;
                     sReceiveBufferIndex = 0;
                 }
             } else {
-                // plain message byte
-                sReceiveBuffer[sReceiveBufferIndex++] = tByte;
+                if (sReceiveBufferIndex == sReceivedDataSize) {
+                    // now we expect a sync token
+                    if (tByte == SYNC_TOKEN) {
+                        // event completely received
+                        // we have one dedicated touch down event in order not to overwrite it with other events before processing it
+                        // Yes it makes no sense if interrupts are allowed!
+                        struct BluetoothEvent * tRemoteTouchEventPtr = &remoteEvent;
+#ifndef DO_NOT_NEED_BASIC_TOUCH
+                        if (sReceivedEventType == EVENT_TOUCH_ACTION_DOWN
+                                || (remoteTouchDownEvent.EventType == EVENT_NO_EVENT && remoteEvent.EventType == EVENT_NO_EVENT)) {
+                            tRemoteTouchEventPtr = &remoteTouchDownEvent;
+                        }
+#endif
+                        tRemoteTouchEventPtr->EventType = sReceivedEventType;
+                        // copy buffer to structure
+                        memcpy(tRemoteTouchEventPtr->EventData.ByteArray, sReceiveBuffer, sReceivedDataSize);
+                        sReceiveBufferIndex = 0;
+                        sReceivedEventType = EVENT_NO_EVENT;
+
+                        if (allowTouchInterrupts) {
+                            // Dangerous, it blocks receive event as long as event handling goes on!!!
+                            handleEvent(tRemoteTouchEventPtr);
+                        }
+                    } else {
+                        // reset buffer since we had an overflow or glitch
+                        sReceiveBufferOutOfSync = true;
+                        sReceiveBufferIndex = 0;
+                    }
+                } else {
+                    // plain message byte
+                    sReceiveBuffer[sReceiveBufferIndex++] = tByte;
+                }
             }
         }
     }
-}
-#else
+#else // USE_SIMPLE_SERIAL line 294
 
 /*
- * Will be called after each loop() (by serial...) to process input data if available.
+ * Will be called after each loop() (by Arduino Serial...) to process input data if available.
  */
 void serialEvent(void) {
     if (sReceiveBufferOutOfSync) {
@@ -420,4 +434,4 @@ void serialEvent(void) {
         }
     }
 }
-#endif
+#endif // USE_SIMPLE_SERIAL line 294

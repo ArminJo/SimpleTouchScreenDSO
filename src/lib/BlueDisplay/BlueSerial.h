@@ -68,7 +68,7 @@ void sendUSARTArgs(uint8_t aFunctionTag, int aNumberOfArgs, ...);
 void sendUSARTArgsAndByteBuffer(uint8_t aFunctionTag, int aNumberOfArgs, ...);
 void sendUSART5Args(uint8_t aFunctionTag, uint16_t aXStart, uint16_t aYStart, uint16_t aXEnd, uint16_t aYEnd, uint16_t aColor);
 void sendUSART5ArgsAndByteBuffer(uint8_t aFunctionTag, uint16_t aXStart, uint16_t aYStart, uint16_t aXEnd, uint16_t aYEnd,
-		uint16_t aColor, uint8_t * aBuffer, size_t aBufferLength);
+		uint16_t aColor, uint8_t * aBufferPtr, size_t aBufferLength);
 
 #define PAIRED_PIN 5
 
@@ -76,15 +76,18 @@ void sendUSART5ArgsAndByteBuffer(uint8_t aFunctionTag, uint16_t aXStart, uint16_
 bool USART_isBluetoothPaired(void);
 #else
 #if defined(LOCAL_DISPLAY_EXISTS)
+void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin);
 #define USART_isBluetoothPaired() (false)
 #else
+void initSimpleSerial(uint32_t aBaudRate);
 #define USART_isBluetoothPaired() (true)
 #endif
 #endif
 
 extern bool allowTouchInterrupts;
-void initSimpleSerial(uint32_t aBaudRate, bool aUsePairedPin);
-void USART_send(char aChar);
+void sendUSART(char aChar);
+void sendUSART(const char * aChar);
+//void USART_send(char aChar);
 
 void serialEvent();
 

@@ -31,11 +31,11 @@
 #define EVENTHANDLER_H_
 
 #ifndef DO_NOT_NEED_BASIC_TOUCH_EVENTS
-//#define DO_NOT_NEED_BASIC_TOUCH_EVENTS // outcommenting or better defining for the compiler with -DDO_NOT_NEED_BASIC_TOUCH_EVENTS saves 620 bytes FLASH and 36 bytes RAM
+//#define DO_NOT_NEED_BASIC_TOUCH_EVENTS // commenting out or better defining for the compiler with -DDO_NOT_NEED_BASIC_TOUCH_EVENTS saves 620 bytes FLASH and 36 bytes RAM
 #endif
 
 #ifdef LOCAL_DISPLAY_EXISTS
-#include "BlueDisplay.h" // for Color_t
+#include "BlueDisplay.h" // for
 //#include "ADS7846.h"
 //extern ADS7846 TouchPanel;
 #else
@@ -125,7 +125,7 @@ void setPeriodicTouchCallbackPeriod(uint32_t aCallbackPeriod);
 
 bool getDisplayXYValuesFlag(void);
 void setDisplayXYValuesFlag(bool aEnableDisplay);
-void printTPData(int x, int y, Color_t aColor, Color_t aBackColor);
+void printTPData(int x, int y,  color16_t aColor,  color16_t aBackColor);
 #endif
 
 #ifdef __cplusplus

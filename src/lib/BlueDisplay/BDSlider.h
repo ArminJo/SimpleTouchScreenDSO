@@ -51,8 +51,7 @@ typedef uint16_t BDSliderHandle_t;
 
 extern BDSliderHandle_t sLocalSliderIndex;
 
-//#include "BlueDisplay.h" // for Color_t - cannot be included here since BlueDisplay.h needs BDSlider
-typedef uint16_t Color_t;
+#include "Colors.h" // for color16_t
 
 #ifdef __cplusplus
 class BDSlider {
@@ -82,24 +81,24 @@ public:
      * @param aOnChangeHandler - if NULL no update of bar is done on touch
      */
     void init(uint16_t aPositionX, uint16_t aPositionY, uint16_t aBarWidth, int16_t aBarLength, int16_t aThresholdValue,
-            int16_t aInitalValue, Color_t aSliderColor, Color_t aBarColor, uint8_t aFlags,
+            int16_t aInitalValue, color16_t aSliderColor, color16_t aBarColor, uint8_t aFlags,
             void (*aOnChangeHandler)(BDSlider *, uint16_t));
 
     void drawSlider(void);
     void drawBorder(void);
     void setActualValue(int16_t aActualValue);
     void setActualValueAndDrawBar(int16_t aActualValue);
-    void setBarColor(Color_t aBarColor);
-    void setBarThresholdColor(Color_t aBarThresholdColor);
-    void setBarBackgroundColor(Color_t aBarBackgroundColor);
+    void setBarColor(color16_t aBarColor);
+    void setBarThresholdColor(color16_t aBarThresholdColor);
+    void setBarBackgroundColor(color16_t aBarBackgroundColor);
 
-    void setCaptionProperties(uint8_t aCaptionSize, uint8_t aCaptionPosition, uint8_t aCaptionMargin, Color_t aCaptionColor,
-            Color_t aCaptionBackgroundColor);
+    void setCaptionProperties(uint8_t aCaptionSize, uint8_t aCaptionPosition, uint8_t aCaptionMargin, color16_t aCaptionColor,
+            color16_t aCaptionBackgroundColor);
     void setCaption(const char * aCaption);
     void setValueUnitString(const char * aValueUnitString);
     void setValueFormatString(const char * aValueFormatString);
     void setPrintValueProperties(uint8_t aPrintValueSize, uint8_t aPrintValuePosition, uint8_t aPrintValueMargin,
-            Color_t aPrintValueColor, Color_t aPrintValueBackgroundColor);
+            color16_t aPrintValueColor, color16_t aPrintValueBackgroundColor);
     void printValue(const char * aValueString);
     /*
      * Scale factor of 2 means, that the slider is virtually 2 times larger than displayed

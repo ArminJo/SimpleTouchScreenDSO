@@ -196,7 +196,7 @@ inline void resetTimingDebug(void) {
 #define COLOR_DATA_PICKER COLOR_YELLOW
 #define COLOR_MAX_MIN_LINE 0X0200 // light green
 #define COLOR_HOR_REF_LINE_LABEL COLOR_BLUE
-#define COLOR_TRIGGER_LINE COLOR_MAGENTA
+#define COLOR_TRIGGER_LINE COLOR_PURPLE
 #define COLOR_TIMING_LINES RGB(0x00,0x98,0x00)
 
 // GUI element colors
@@ -1814,7 +1814,7 @@ void doChannelSelect(TouchButton * const aTheTouchedButton, int16_t aValue) {
     } else if (tChannel == MAX_ADC_CHANNEL + 1) {
         tChannel = 8; // Temperature
         MeasurementControl.ADCInputMUXChannelChar = 'T';
-    } else if (tChannel == 9) {
+    } else if (tChannel == MAX_ADC_CHANNEL + 2) {
         tChannel = 14; // 1.1 Reference
         MeasurementControl.ADCInputMUXChannelChar = 'R';
     } else if (tChannel == 15) {

@@ -11,7 +11,7 @@ extern "C" {
 }
 #endif
 #include "Print.h"
-#include "Colors16Bit.h"
+#include "Colors.h"
 
 #ifndef DEC
 # define DEC (10)
